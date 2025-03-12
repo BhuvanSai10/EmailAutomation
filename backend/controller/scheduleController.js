@@ -1,20 +1,21 @@
 const ScheduledEmail = require('../model/scheduledEmail');
 const nodemailer = require('nodemailer');
-const { EMAIL, PASSWORD } = require('../env.js');
+const User = require('../model/user');
 
 const scheduleEmail = async (req, res) => {
   try {
-    const { userEmail, subject, body, scheduledTime } = req.body;
+    const { senderEmail, userEmail, subject, body, scheduledTime } = req.body;
 
     if (!userEmail || !subject || !body || !scheduledTime) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
     const scheduledEmail = new ScheduledEmail({
+      from: senderEmail,
       to: userEmail,
       subject: subject,
       body: body,
-      scheduledTime: new Date(scheduledTime), 
+      scheduledTime: new Date(scheduledTime),
     });
 
     await scheduledEmail.save();
@@ -38,20 +39,29 @@ const sendScheduledEmails = async () => {
       return;
     }
 
-    let config = {
-      service: "gmail",
-      auth: {
-        user: EMAIL,
-        pass: PASSWORD,
-      },
-    };
-
-    let transporter = nodemailer.createTransport(config);
-
     for (const email of emailsToSend) {
       try {
+        const senderUser = await User.findOne({ email: email.from });
+
+        if (!senderUser) {
+          console.error(`Sender user not found for email: ${email.from}`);
+          email.status = 'failed';
+          await email.save();
+          continue; 
+        }
+
+        let config = {
+          service: "gmail",
+          auth: {
+            user: senderUser.email,
+            pass: senderUser.passkey,
+          },
+        };
+
+        let transporter = nodemailer.createTransport(config);
+
         let message = {
-          from: EMAIL,
+          from: senderUser.email, 
           to: email.to,
           subject: email.subject,
           html: email.body,

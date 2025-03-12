@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Form from './Form';
+import { useSearchParams } from 'react-router-dom';
 
 const HeroSection = () => {
   const [showForm, setShowForm] = useState(false);
+  const [searchParams] = useSearchParams();
+  const senderEmail = searchParams.get('senderEmail');
 
   const handleButtonClick = () => {
     setShowForm(true);
@@ -10,7 +13,7 @@ const HeroSection = () => {
 
   return (
     <>
-      {!showForm && ( // Conditionally render the entire hero section
+      {!showForm && ( 
         <div className='flex flex-col items-center mt-6 lg:mt-30'>
           <h1 className='text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide'>
             Automate Your
@@ -34,7 +37,7 @@ const HeroSection = () => {
         </div>
       )}
 
-      {showForm && <Form />}
+      {showForm && <Form  senderEmail={senderEmail} />}
     </>
   );
 };

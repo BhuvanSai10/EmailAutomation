@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const scheduledEmailSchema = new mongoose.Schema({
+  from:String,
   to: String,
   subject: String,
   body: String,
