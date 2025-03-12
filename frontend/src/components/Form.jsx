@@ -5,20 +5,32 @@ const Form = () => {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
-  // const [datetime, setDatetime] = useState("");
+  const [scheduledTime, setScheduledTime] = useState("");
+  const [sendNow, setSendNow] = useState(true); 
 
   const handleSubmit = async () => {
     try {
-      await axios.post("http://localhost:5000/api/automateMail", {
-        userEmail: email,
-        subject: subject,
-        body: body,
-        // datetime: datetime,
-      });
-      alert("Email sent successfully!");
+      if (sendNow) {
+        // Send email immediately
+        await axios.post("http://localhost:5000/api/automateMail", {
+          userEmail: email,
+          subject: subject,
+          body: body,
+        });
+        alert("Email sent successfully!");
+      } else {
+        // Schedule email
+        await axios.post("http://localhost:5000/api/schedule", {
+          userEmail: email,
+          subject: subject,
+          body: body,
+          scheduledTime: scheduledTime,
+        });
+        alert("Email scheduled successfully!");
+      }
     } catch (error) {
-      console.error("Error sending email:", error);
-      alert("Failed to send email.");
+      console.error("Error:", error);
+      alert("Failed to send/schedule email.");
     }
   };
 
@@ -28,7 +40,7 @@ const Form = () => {
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-s font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-s font-bold mb-1"
               htmlFor="grid-email"
             >
               Email
@@ -46,7 +58,7 @@ const Form = () => {
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-s font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-s font-bold mb-1"
               htmlFor="grid-subject"
             >
               Subject
@@ -64,7 +76,7 @@ const Form = () => {
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-s font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-s font-bold mb-1"
               htmlFor="grid-body"
             >
               Message
@@ -79,10 +91,10 @@ const Form = () => {
             ></textarea>
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="flex flex-wrap -mx-3 mb-4">
           <div className="w-full px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-s font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-s font-bold mb-1"
               htmlFor="grid-datetime"
             >
               Date and Time
@@ -91,22 +103,37 @@ const Form = () => {
               className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-datetime"
               type="datetime-local"
-              // value={datetime}
-              // onChange={(e) => setDatetime(e.target.value)}
+              value={scheduledTime}
+              onChange={(e) => setScheduledTime(e.target.value)}
+              disabled={sendNow} 
             />
           </div>
         </div>
-        <div className="md:flex md:items-center">
-          <div className="md:w-1/3">
+
+        <div className="flex items-center mb-4">
+          <input
+            id="send-now"
+            type="checkbox"
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            checked={sendNow}
+            onChange={() => setSendNow(!sendNow)}
+          />
+          <label
+            htmlFor="send-now"
+            className="ml-2 block uppercase tracking-wide text-gray-700 text-s font-bold "
+          >
+            Send Email Now
+          </label>
+        </div>
+
+        <div className="flex justify-center">
             <button
               className="mt-4 mb-10 text-2xl bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer"
               type="button"
               onClick={handleSubmit}
             >
-              Send
+              {sendNow ? "Send Email" : "Schedule Email"}
             </button>
-          </div>
-          <div className="md:w-2/3"></div>
         </div>
       </form>
     </div>
