@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import HeroSection from "./HeroSection";
 
 const Form = () => {
   const [email, setEmail] = useState("");
@@ -7,6 +8,11 @@ const Form = () => {
   const [body, setBody] = useState("");
   const [scheduledTime, setScheduledTime] = useState("");
   const [sendNow, setSendNow] = useState(true); 
+  const [showHeroSection, setShowHeroSection] = useState(false);
+  
+    const handleButtonClick = () => {
+      setShowHeroSection(true);
+    };
 
   const handleSubmit = async () => {
     try {
@@ -35,7 +41,9 @@ const Form = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-6 lg:mt-10">
+    <>
+    {!showHeroSection &&
+      <div className="flex flex-col items-center mt-6 lg:mt-10">
       <form className="w-full max-w-lg">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
@@ -128,15 +136,28 @@ const Form = () => {
 
         <div className="flex justify-center">
             <button
-              className="mt-4 mb-10 text-2xl bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer"
+              className="mt-4 mb-10 mr-4 text-2xl bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer"
               type="button"
               onClick={handleSubmit}
             >
               {sendNow ? "Send Email" : "Schedule Email"}
             </button>
+            <button
+              className='mt-4 mb-10 text-2xl bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer'
+              type="button"
+              onClick={handleButtonClick}
+            >
+              Back
+            </button>
         </div>
+        
       </form>
     </div>
+    }
+
+    {showHeroSection && <HeroSection />}
+    </>
+    
   );
 };
 
