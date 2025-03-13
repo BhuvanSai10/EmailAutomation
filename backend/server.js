@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const cors = require('cors');
 const routes = require('./routes/route.js'); 
 const connectDB = require('./config/db.js');
@@ -17,5 +18,5 @@ app.use('/api', routes);
 schedule.scheduleJob('*/1 * * * *', sendScheduledEmails);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on ${process.env.FRONTEND_URL}`);
 });

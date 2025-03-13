@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BACKEND_URL } from '../env.js';
+
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Signup = () => {
   const handleSignup = async () => {
     setError('');
     try {
-      const response = await fetch(`${BACKEND_URL}/api/signup`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,6 +32,7 @@ const Signup = () => {
         setError(data.message || 'Signup failed');
       }
     } catch (err) {
+
       setError('An error occurred during signup.');
     }
   };

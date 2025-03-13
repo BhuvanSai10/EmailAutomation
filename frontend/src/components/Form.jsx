@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import HeroSection from "./HeroSection";
-import { BACKEND_URL } from '../env.js';
+
 
 const Form = ({ senderEmail }) => {
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ const Form = ({ senderEmail }) => {
   const handleSubmit = async () => {
     try {
       if (sendNow) {
-        await axios.post(`${BACKEND_URL}/api/automateMail`, {
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/automateMail`, {
           senderEmail: senderEmail,
           userEmail: email,
           subject: subject,
@@ -34,7 +34,7 @@ const Form = ({ senderEmail }) => {
         });
         alert("Email sent successfully!");
       } else {
-        await axios.post(`${BACKEND_URL}/api/schedule`, {
+        await axios.post(`${process.env.BACKEND_URL}/api/schedule`, {
           senderEmail: senderEmail,
           userEmail: email,
           subject: subject,
