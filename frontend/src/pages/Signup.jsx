@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from '../env.js';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Signup = () => {
   const handleSignup = async () => {
     setError('');
     try {
-      const response = await fetch('http://localhost:5000/api/signup', {
+      const response = await fetch(`${BACKEND_URL}/api/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,7 +26,6 @@ const Signup = () => {
       });
 
       const data = await response.json();
-      console.log(data)
       if (response.ok) {
         navigate('/signin');
       } else {
