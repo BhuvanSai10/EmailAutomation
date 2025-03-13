@@ -52,7 +52,7 @@ const Form = ({ senderEmail }) => {
   return (
     <>
       {!showHeroSection && (
-        <div className="flex flex-col items-center mt-6 lg:mt-10">
+        <div className="flex flex-col items-center mt-6 lg:mt-10 max-sm:mt-15 m-10 ">
           <form className="w-full max-w-lg">
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
@@ -143,16 +143,16 @@ const Form = ({ senderEmail }) => {
               </label>
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center max-sm:flex-col items-center">
               <button
-                className="mt-4 mb-10 mr-4 text-2xl bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer"
+                className="mt-4 mb-10 mr-4 text-2xl bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer max-sm:mb-4"
                 type="button"
                 onClick={handleSubmit}
               >
                 {sendNow ? "Send Email" : "Schedule Email"}
               </button>
               <button
-                className="mt-4 mb-10 text-2xl bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer"
+                className="mt-4 mb-10 text-2xl bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer max-sm:mt-0"
                 type="button"
                 onClick={handleButtonClick}
               >

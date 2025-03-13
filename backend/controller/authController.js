@@ -5,6 +5,9 @@ const jwt = require('jsonwebtoken');
 const signup = async (req, res) => {
   try {
     const { email, password, passkey } = req.body;
+    if (!email || !password || !passkey) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ email, password: hashedPassword, passkey });
     await user.save();
@@ -22,6 +25,9 @@ const signup = async (req, res) => {
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });

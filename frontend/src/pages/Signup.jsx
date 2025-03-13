@@ -25,7 +25,7 @@ const Signup = () => {
       });
 
       const data = await response.json();
-
+      console.log(data)
       if (response.ok) {
         navigate('/signin');
       } else {
@@ -37,8 +37,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-6 lg:mt-10">
-      <span className="uppercase text-2xl bg-gradient-to-r from-orange-500 to-red-800 text-transparent font-bold bg-clip-text">
+    <div className="flex flex-col items-center mt-6 lg:mt-10 max-sm:mt-15 m-10">
+      <span className="uppercase text-2xl bg-gradient-to-r from-orange-500 to-red-800 text-transparent font-bold bg-clip-text mb-5">
         Create an Account
       </span>
       <form className="w-full max-w-lg">
@@ -100,24 +100,24 @@ const Signup = () => {
         </div>
         {error && <p className="text-red-500">{error}</p>}
         <div className="flex flex-col items-center">
-          <button
-            className="mt-4 mb-5 mr-4 w-1/3 text-2xl uppercase bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer"
-            type="button"
-            onClick={handleSignup}
-          >
-            Sign up
-          </button>
-          <span className="block uppercase tracking-wide text-s mb-1">
-            Already have an account ?{' '}
-          </span>
-          <button
-            className="mt-4 mb-10 mr-4 w-1/3 text-2xl uppercase bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer"
-            type="button"
-            onClick={handleSignIn}
-          >
-            Sign in
-          </button>
-        </div>
+        <button
+          className="mt-4 mb-5 mr-4 w-40 sm:w-1/3 text-2xl uppercase bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer"
+          type="button"
+          onClick={handleSignup}
+        >
+          Sign up
+        </button>
+        <span className="block uppercase tracking-wide text-s mb-1 max-sm:text-xs">
+          Already have an account ?{' '}
+        </span>
+        <button
+          className="mt-4 mb-10 mr-4 w-40 sm:w-1/3 text-2xl uppercase bg-orange-500 text-[#E2E8CE] px-4 py-2 rounded hover:bg-amber-700 cursor-pointer"
+          type="button"
+          onClick={handleSignIn}
+        >
+          Sign in
+        </button>
+      </div>
       </form>
     </div>
   );
