@@ -19,6 +19,6 @@ app.use('/api', routes);
 
 schedule.scheduleJob('*/1 * * * *', sendScheduledEmails);
 
-app.listen(PORT, () => {
+app.listen('https://emailautomation-1.onrender.com', () => {
   console.log(`Server is running on ${process.env.FRONTEND_URL}`);
 });
