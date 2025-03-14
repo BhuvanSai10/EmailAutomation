@@ -15,7 +15,7 @@ const Signin = () => {
   const handleSignin = async () => {
     setError('');
     try {
-      const response = await fetch(`https://emailautomation-g77i.onrender.com/api/signin`, {
+      const response = await fetch('https://emailautomation-g77i.onrender.com/api/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
