@@ -13,7 +13,7 @@ connectDB();
 
 app.use(express.json());
 app.use(cors({
-  origin: 'https://emailautomation-1.onrender.com/'
+  origin: 'https://emailautomation-1.onrender.com'
 }));
 app.use('/api', routes); 
 
