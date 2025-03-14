@@ -34,7 +34,7 @@ const Form = ({ senderEmail }) => {
         });
         alert("Email sent successfully!");
       } else {
-        await axios.post(`${process.env.BACKEND_URL}/api/schedule`, {
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/schedule`, {
           senderEmail: senderEmail,
           userEmail: email,
           subject: subject,
