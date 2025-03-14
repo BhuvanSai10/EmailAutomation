@@ -26,7 +26,7 @@ const Form = ({ senderEmail }) => {
   const handleSubmit = async () => {
     try {
       if (sendNow) {
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/automateMail`, {
+        await axios.post('https://emailautomation-g77i.onrender.com/api/automateMail', {
           senderEmail: senderEmail,
           userEmail: email,
           subject: subject,
@@ -34,7 +34,7 @@ const Form = ({ senderEmail }) => {
         });
         alert("Email sent successfully!");
       } else {
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/schedule`, {
+        await axios.post('https://emailautomation-g77i.onrender.com/api/schedule', {
           senderEmail: senderEmail,
           userEmail: email,
           subject: subject,
